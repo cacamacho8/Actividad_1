@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package producto;
+
+option java_multiple_files = true;
+option java_package = "com.example.productapi.grpc";
+option java_outer_classname = "ProductoProto";
+
+service ProductoService {
+  rpc ListarProductos (Vacio) returns (ListaProductos);
+  rpc ObtenerProducto (ProductoId) returns (Producto);
+  rpc CrearProducto (ProductoInput) returns (Producto);
+  rpc ActualizarProducto (ActualizarProductoRequest) returns (Producto);
+  rpc EliminarProducto (ProductoId) returns (OperacionResponse);
+}
+
+message Vacio {}
+
+message ProductoId {
+  int64 id = 1;
+}
+
+message ProductoInput {
+  string nombre = 1;
+  string descripcion = 2;
+  double precio = 3;
+}
+
+message ActualizarProductoRequest {
+  int64 id = 1;
+  ProductoInput producto = 2;
+}
+
+message Producto {
+  int64 id = 1;
+  string nombre = 2;
+  string descripcion = 3;
+  double precio = 4;
+}
+
+message ListaProductos {
+  repeated Producto productos = 1;
+}
+
+message OperacionResponse {
+  bool exitoso = 1;
+  string mensaje = 2;
+}
